@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlatziStore.MainPage"
+             xmlns:local="clr-namespace:PlatziStore.ViewModels"
+             x:Name="myContentpage"
+             >
+    <ContentPage.BindingContext>
+        <local:MainViewModel></local:MainViewModel>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".4*"/>
+                <ColumnDefinition Width=".3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" FontSize="24" Grid.Column="0" Margin="0,20">Productos</Label>
+            <ListView Grid.Row="1" ItemsSource="{Binding Productos}" Margin="0,60" x:Name="lstItems">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Ver detalles" IsDestructive="True" Command="{Binding Source={x:Reference lstItems}, Path=BindingContext.VerDetallesProductoCommand}">
+                                    
+                                </MenuItem>
+                            </ViewCell.ContextActions>
+                            <StackLayout Padding="12" HorizontalOptions="Start">
+                                <Image HorizontalOptions="Start" Source="{Binding category.image}" WidthRequest="150" HeightRequest="150" />
+                                <Label FontSize="24" HorizontalOptions="Start"  Text="{Binding title}"></Label>
+                                <Button Command="{Binding }"
+                                        Text="Ver detalles"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                       
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <Label Grid.Row="0"  Grid.Column="1">
+                Agregar producto
+            </Label>
+
+            <StackLayout Grid.Row="1" Grid.Column="1">
+                <Entry Placeholder="Nombre del producto" Text="{Binding Producto.title}"></Entry>
+                <Entry Placeholder="Precio del producto" Text="{Binding Producto.price}"></Entry>
+                <Entry Placeholder="Descripcion del producto" Text="{Binding Producto.description}"></Entry>
+                <Picker ItemDisplayBinding="{Binding Path=name}" ItemsSource="{Binding Categorias}" SelectedItem="{Binding Producto.category.id}" ></Picker>
+                <Button Text="Agregar" Command="{Binding AgregarProductoCommand}"></Button>
+            </StackLayout>
+          
+
+        </Grid>
+
+       
+    </ScrollView>
+
+</ContentPage>
